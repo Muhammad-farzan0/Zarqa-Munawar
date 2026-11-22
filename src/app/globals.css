@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --fg: 10 18 32; --ink-950: 241 246 252; --ink-900: 255 255 255; --ink-800: 230 240 251; --ink-700: 208 224 244;
+  --brand-300: 22 96 168; --brand-400: 35 122 205; --brand-500: 35 128 208;
+  --slate-200: 30 41 59; --slate-300: 51 65 85; --slate-400: 71 85 105; --slate-500: 100 116 139;
+}
+.dark {
+  color-scheme: dark;
+  --fg: 255 255 255; --ink-950: 5 9 18; --ink-900: 10 18 32; --ink-800: 17 27 46; --ink-700: 26 39 64;
+  --brand-300: 142 201 246; --brand-400: 94 178 240; --brand-500: 59 155 232;
+  --slate-200: 226 232 240; --slate-300: 203 213 225; --slate-400: 148 163 184; --slate-500: 100 116 139;
+}
+html { scroll-behavior: smooth; }
+body { @apply bg-ink-950 font-body text-slate-300 antialiased; }
+h1, h2, h3 { @apply font-display text-fg; }
+:focus-visible { outline: 2px solid #5eb2f0; outline-offset: 3px; border-radius: 6px; }
+::selection { background: #3b9be8; color: #fff; }
+
+/* Background floating symbols: fixed layer, motion is time-based and unrelated to scroll */
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  100% { transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--rot)); }
+}
+.drift { animation: drift var(--dur) ease-in-out var(--delay) infinite alternate; will-change: transform; }
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 38s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .drift, .marquee-track { animation: none !important; }
+  html { scroll-behavior: auto; }
+}
